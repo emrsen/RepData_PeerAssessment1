@@ -1,25 +1,92 @@
 ---
-title: "Reproducible Research: Peer Assessment 1"
-output: 
-  html_document:
-    keep_md: true
+title: "Peer Assessment 1 for Reproducible Research"
+author: "Emre"
+date: "2017 M10 8"
+output: html_document
 ---
 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
 
 ## Loading and preprocessing the data
 
+This is to downlaod "data.zip"and extract "activity.csv" if not available  
+Read data from file  
+Convert string format to date  
 
+```{r prepocess}
+csvFile <- "activity.csv"
+if( !file.exists(csvFile) ){
+  zipFile <- "data.zip"
+  # Download if not exists
+  if( !file.exists(zipFile) ){
+    download.file("https://github.com/emrsen/RepData_PeerAssessment1/blob/master/activity.zip", destfile = zipFile)
+  }
+  # Extract zip
+  unzip(zipFile, exdir = ".") 
+}
+
+# Read data from file
+df <- read.csv(csvFile, stringsAsFactors = F)
+# Covert string to date format
+df$date2 <- as.Date(df$date,"%Y-%m-%d")
+```
 
 ## What is mean total number of steps taken per day?
 
+Calculating daily sum of the steps
 
+```{r mean total steps daily}
+# Calculate daily sum of steps
+stepsday<-tapply(df$steps, df$date2, FUN=sum, na.rm=TRUE)
+#Calculate mean of daily sum of steps
+mean(stepsday)
+```
 
 ## What is the average daily activity pattern?
 
+Graphing average daily activity pattern interval basis
 
+```{r graph averag}
+#Calculate average steps for each inteval
+stepsmeanint <- tapply(df$steps, df$interval, FUN = mean, na.rm = TRUE)
+#Plot graph for the average steps
+plot(names(stepsmeanint),stepsmeanint, type = "l", main = "Time Series Plot", xlab = "5-Minute Intervals", ylab = "Average Number of Steps")
+#maximum average steps for the time of the day 5 minute interval
+as.numeric(names(which.max(stepsmeanint)))
+#maximum average steps values
+max(stepsmeanint)
+
+```
 
 ## Imputing missing values
 
+Replacing missing values using calculated average mean of each steps
 
+```{r missing values}
+#create subset of missing steps
+dfna <- df[which(is.na(df$steps)),]
+#create a new copy of the data frame df
+df_imputed <- df
+#replace missing steps in the new imputed data frame with the calculated missing steps
+df_imputed$steps[is.na(df$steps)] <- stepsmeanint[as.character(dfna$interval)]
+```
 
 ## Are there differences in activity patterns between weekdays and weekends?
+
+Displaying weekdays and weekends patterns
+
+```{r weekdayend}
+#Adding weekday info to the imputed data
+df_imputed$WD <- weekdays(df_imputed$date2)
+#Adding Weekday or weekend info
+df_imputed$WDF <- ifelse(df_imputed$WD %in% c("Monday","Tuesday","Wednesday","Thursday","Friday"), "WeekDay", "WeekEnd")
+#Comparale graphics in ggplot
+library(ggplot2)
+ggplot(df_imputed, aes(x=interval, y=steps, color=WDF)) + geom_line()
+
+```
+  
+Weekdays people walk more early morning hours  
+Weekends people walk more in afternoon hours
