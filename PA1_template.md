@@ -38,12 +38,18 @@ Calculating daily sum of the steps
 # Calculate daily sum of steps
 stepsday<-tapply(df$steps, df$date2, FUN=sum, na.rm=TRUE)
 #Plot histogram for the daily sum of the steps
-barplot(stepsday,main = "Total steps per day histogram distribution",xlab = "Daily steps")
+barplot(stepsday,main = "Total steps per day distribution",xlab = "Daily steps")
 abline(h=mean(stepsday))
 abline(h=median(stepsday), col="red")
 ```
 
 ![](PA1_template_files/figure-html/mean_total_steps_daily-1.png)<!-- -->
+
+```r
+hist(stepsday,main = "Total steps per day histogram distribution",xlab = "Daily steps")
+```
+
+![](PA1_template_files/figure-html/mean_total_steps_daily-2.png)<!-- -->
 
 ```r
 #Calculate mean of daily sum of steps black line
@@ -110,12 +116,18 @@ df_imputed$steps[is.na(df$steps)] <- stepsmeanint[as.character(dfna$interval)]
 # Calculate daily sum of imputed steps
 stepsday_imp<-tapply(df_imputed$steps, df_imputed$date2, FUN=sum, na.rm=TRUE)
 # Plot histogram for the daily sum of the steps
-barplot(stepsday_imp,main = "Total steps(imputed) per day histogram distribution",xlab = "Daily steps")
+barplot(stepsday_imp,main = "Total steps(imputed) per day distribution",xlab = "Daily steps")
 abline(h=mean(stepsday_imp))
 abline(h=median(stepsday_imp), col="red")
 ```
 
 ![](PA1_template_files/figure-html/impute_missing_values-1.png)<!-- -->
+
+```r
+hist(stepsday_imp,main = "Total steps per day (imputed) histogram distribution",xlab = "Daily steps")
+```
+
+![](PA1_template_files/figure-html/impute_missing_values-2.png)<!-- -->
 
 ```r
 # Calculate mean of daily sum of imputed steps black line

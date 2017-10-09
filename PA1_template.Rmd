@@ -45,9 +45,10 @@ Calculating daily sum of the steps
 # Calculate daily sum of steps
 stepsday<-tapply(df$steps, df$date2, FUN=sum, na.rm=TRUE)
 #Plot histogram for the daily sum of the steps
-barplot(stepsday,main = "Total steps per day histogram distribution",xlab = "Daily steps")
+barplot(stepsday,main = "Total steps per day distribution",xlab = "Daily steps")
 abline(h=mean(stepsday))
 abline(h=median(stepsday), col="red")
+hist(stepsday,main = "Total steps per day histogram distribution",xlab = "Daily steps")
 #Calculate mean of daily sum of steps black line
 mean(stepsday)
 #Calculate median of daily sum of steps red line
@@ -84,9 +85,10 @@ df_imputed$steps[is.na(df$steps)] <- stepsmeanint[as.character(dfna$interval)]
 # Calculate daily sum of imputed steps
 stepsday_imp<-tapply(df_imputed$steps, df_imputed$date2, FUN=sum, na.rm=TRUE)
 # Plot histogram for the daily sum of the steps
-barplot(stepsday_imp,main = "Total steps(imputed) per day histogram distribution",xlab = "Daily steps")
+barplot(stepsday_imp,main = "Total steps(imputed) per day distribution",xlab = "Daily steps")
 abline(h=mean(stepsday_imp))
 abline(h=median(stepsday_imp), col="red")
+hist(stepsday_imp,main = "Total steps per day (imputed) histogram distribution",xlab = "Daily steps")
 # Calculate mean of daily sum of imputed steps black line
 mean(stepsday_imp)
 # Calculate median of daily sum of imputed steps red line
