@@ -41,7 +41,7 @@ df$date2 <- as.Date(df$date,"%Y-%m-%d")
 
 Calculating daily sum of the steps
 
-```{r mean total steps daily}
+```{r mean_total_steps_daily}
 # Calculate daily sum of steps
 stepsday<-tapply(df$steps, df$date2, FUN=sum, na.rm=TRUE)
 #Plot histogram for the daily sum of the steps
@@ -58,7 +58,7 @@ median(stepsday)
 
 Graphing average daily activity pattern interval basis
 
-```{r graph averag}
+```{r graph_average}
 #Calculate average steps for each inteval
 stepsmeanint <- tapply(df$steps, df$interval, FUN = mean, na.rm = TRUE)
 #Plot graph for the average steps
@@ -74,7 +74,7 @@ max(stepsmeanint)
 
 Replacing missing values using calculated average mean of each steps
 
-```{r missing values}
+```{r impute_missing_values}
 #create subset of missing steps
 dfna <- df[which(is.na(df$steps)),]
 #create a new copy of the data frame df
@@ -99,7 +99,7 @@ median(stepsday_imp)
 
 Displaying weekdays and weekends patterns
 
-```{r weekdayend}
+```{r weekdayend_compare}
 #Adding weekday info to the imputed data
 df_imputed$WD <- weekdays(df_imputed$date2)
 #Adding Weekday or weekend info

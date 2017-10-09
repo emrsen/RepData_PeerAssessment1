@@ -43,7 +43,7 @@ abline(h=mean(stepsday))
 abline(h=median(stepsday), col="red")
 ```
 
-![](PA1_template_files/figure-html/mean total steps daily-1.png)<!-- -->
+![](PA1_template_files/figure-html/mean_total_steps_daily-1.png)<!-- -->
 
 ```r
 #Calculate mean of daily sum of steps black line
@@ -75,7 +75,7 @@ stepsmeanint <- tapply(df$steps, df$interval, FUN = mean, na.rm = TRUE)
 plot(names(stepsmeanint),stepsmeanint, type = "l", main = "Steps in Time Series Plot", xlab = "5-Minute Intervals", ylab = "Average Number of Steps")
 ```
 
-![](PA1_template_files/figure-html/graph averag-1.png)<!-- -->
+![](PA1_template_files/figure-html/graph_average-1.png)<!-- -->
 
 ```r
 #maximum average steps for the time of the day 5 minute interval
@@ -115,7 +115,7 @@ abline(h=mean(stepsday_imp))
 abline(h=median(stepsday_imp), col="red")
 ```
 
-![](PA1_template_files/figure-html/missing values-1.png)<!-- -->
+![](PA1_template_files/figure-html/impute_missing_values-1.png)<!-- -->
 
 ```r
 # Calculate mean of daily sum of imputed steps black line
@@ -162,7 +162,7 @@ library(ggplot2)
 ggplot(df_imputed, aes(x=interval, y=steps, color=WDF)) + geom_line()
 ```
 
-![](PA1_template_files/figure-html/weekdayend-1.png)<!-- -->
+![](PA1_template_files/figure-html/weekdayend_compare-1.png)<!-- -->
   
 Weekdays people walk more early morning hours  
 Weekends people walk more in afternoon hours
